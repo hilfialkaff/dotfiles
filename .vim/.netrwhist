@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/aurum/projects/tess/kernel/benchmarks/linux-tests/results'
+let g:netrw_dirhist_2='/home/aurum/projects/tess/kernel/kern/arch/i686/cache_part'
+let g:netrw_dirhist_3='/home/aurum/.vimperator'
+let g:netrw_dirhist_4='/home/aurum/projects/tess/kernel/benchmarks/tess-tests'
+let g:netrw_dirhist_5='/srv/ftp'
+let g:netrw_dirhist_6='/home/aurum/projects/tess/linux-deadline/arch/x86/kernel/cpu/cpufreq'
+let g:netrw_dirhist_7='/home/aurum/projects/tess/whitepapers/memo6'
