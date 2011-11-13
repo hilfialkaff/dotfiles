@@ -4,16 +4,13 @@ set expandtab
 syntax on
 set incsearch
 set clipboard=unnamed
+set t_Co=256
 colorscheme jellybeans
-" set ignorecase
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 set hlsearch
 set wildmode=longest,list
 
-" Only enable when needed
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-
-set path=/home/aurum/.vim/plugin/
-source /home/aurum/.vim/plugin/cscope_maps.vim
+source /home/$USER/.vim/plugin/cscope_maps.vim
 
 map <A-]>v :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]>h :sp <CR>:exec("tag ".expand("<cword>"))<CR>
