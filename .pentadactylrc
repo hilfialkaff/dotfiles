@@ -1,0 +1,5 @@
+set complete=l
+set incfind
+set hlfind
+
+colorscheme neverland 
