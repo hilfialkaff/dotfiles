@@ -1,5 +1,11 @@
+" Only display firefox history when opening prompt
 set complete=l
+
+" Display all search occurences
 set incfind
+
+" Highlight search occurrences
 set hlfind
 
+" Set colorscheme
 colorscheme neverland 
