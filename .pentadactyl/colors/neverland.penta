@@ -33,7 +33,7 @@ hi Bell border: 0 none; background: #161616;
 hi ErrorMsg color: #ffffff; background: red; font-weight: bold;
 
 "Hint section
-hi Hint color: #ff5f00; background: #161616; font-family: Terminus; font-weight: bold; font-size: 20px;
+hi Hint color: #ff5f00; background: #161616; font-family: Terminus; font-weight: bold; font-size: 14px;
 hi HintActive color: #333333; background: #F18C96;
 hi HintElem color: #000D18;
 hi HintImage opacity: .2;
