@@ -9,3 +9,6 @@ set hlfind
 
 " Set colorscheme
 colorscheme neverland 
+
+" Use duckduckgo search engine
+set defsearch=duckduckgo-ssl
