@@ -102,7 +102,7 @@ myXPConfig = defaultXPConfig
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm,               xK_Return), spawn "xterm -bg black -cr white -ms white -fg white")
+    [ ((modm,               xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
     -- , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
@@ -189,8 +189,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_backslash), spawn "xlock")
 
     -- Takes screenshot
-    , ((modm              , xK_Print), spawn "scrot screen_%Y-%m-%d.png -d 1")
-    
+    , ((modm              , xK_Print), spawn "scrot ~/pictures/screen_%Y-%m-%d.png -d 1")
+
+    -- Open mail.
+    , ((modm, xK_o), raiseMaybe (runInTerm "-title mutt" "bash -c 'mutt'") (title =? "mutt"))
+
+    -- Synchronize mail.
+    , ((modm, xK_p), spawn "fetchmail")
+
     ---- Use disper to extend screen to left, up, right, down
     , ((modm .|. controlMask, xK_Left), spawn "disper -e -t left && killall conky && xmonad --restart")
     , ((modm .|. controlMask, xK_Up), spawn "disper -e -t up && killall conky && xmonad --restart")
@@ -286,6 +292,7 @@ myManageHook = composeAll . concat $
     , [className =? "Gimp"           --> doFloat]
     , [resource  =? "desktop_window" --> doIgnore]
     , [resource  =? "kdesktop"       --> doIgnore]
+    , [title     =? "mutt"           --> doRectFloat defaultFloatRect]
     --, isFullscreen                  --> (doF W.focusDown <+> doFullFloat)
     , [isFullscreen                  --> doFullFloat]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1" | x <- my1Shifts]
