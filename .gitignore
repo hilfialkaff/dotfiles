@@ -3,3 +3,5 @@
 *.errors
 history
 xmonad-x86_64-linux
+.vim/.netrwhist
+.vim/.VimballRecord
