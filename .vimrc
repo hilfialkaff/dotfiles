@@ -58,17 +58,30 @@ endif
 " Shortcuts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" set leader to ,
+" If we forget to open file with sudo
+cmap w!! w !sudo tee % > /dev/null
+
+" ctrl-jklm changes to Vim split
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-l> <c-w>l
+noremap <c-h> <c-w>h
+
+" Set leader to ,
 let mapleader=","
 let g:mapleader=","
 
 " Cscope shortcuts
-map <A-]>v :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]>h :sp <CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <A-]>v :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+noremap <A-]>h :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Folding
 nnoremap <Space> za
 vnoremap <Space> za
+
+" open/close the quickfix window
+nmap <leader>c :copen<CR>
+nmap <leader>cc :cclose<CR>
 
 " Epic shortcut to load your last session
 nmap <F3> <ESC>:call LoadSession()<CR>
