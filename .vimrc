@@ -29,11 +29,12 @@ set expandtab                 " Expand tabs into spaces
 
 " Folds
 set foldenable                " Enable folding
+set foldlevelstart=0          " Start out with everything folded
 set foldmethod=syntax         " Fold by per-language-syntax
 
 " Being grammar nazi
 setlocal spell spelllang=en_us
-set thesaurus+=/home/$USER/.vim/thesaurus/mthesaur.txt
+set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 " Enable omni completion.
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -45,12 +46,12 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType java set omnifunc=javacomplete#Complete
 
 " use syntax complete if nothing else available
-if has("autocmd") && exists("+omnifunc")
-  autocmd Filetype *
-              \ if &omnifunc == "" |
-              \ setlocal omnifunc=syntaxcomplete#Complete |
-              \ endif
-endif
+" if has("autocmd") && exists("+omnifunc")
+"   autocmd Filetype *
+"               \ if &omnifunc == "" |
+"               \ setlocal omnifunc=syntaxcomplete#Complete |
+"               \ endif
+" endif
 
 " autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif " Eliminate trailing whitespaces
 
@@ -58,8 +59,15 @@ endif
 " Shortcuts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Set leader to ,
+let mapleader=","
+let g:mapleader=","
+
 " If we forget to open file with sudo
 cmap w!! w !sudo tee % > /dev/null
+
+" Find all todo like a bauss
+noremap <Leader>t :noautocmd vimgrep /TODO/j **/*\.[chsS] **/*\.py **\*.html <CR>:cw<CR>
 
 " ctrl-jklm changes to Vim split
 noremap <c-j> <c-w>j
@@ -67,21 +75,23 @@ noremap <c-k> <c-w>k
 noremap <c-l> <c-w>l
 noremap <c-h> <c-w>h
 
-" Set leader to ,
-let mapleader=","
-let g:mapleader=","
-
 " Cscope shortcuts
 noremap <A-]>v :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 noremap <A-]>h :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Folding
-nnoremap <Space> za
-vnoremap <Space> za
+nnoremap <Space> zA
+vnoremap <Space> zA
 
 " open/close the quickfix window
 nmap <leader>c :copen<CR>
 nmap <leader>cc :cclose<CR>
+
+" Tabs
+noremap <silent> <S-l> :tabnext<CR>
+noremap <silent> <S-h> :tabprevious<CR>
+noremap <silent> <S-t> :tabnew<CR>
+noremap <silent> <S-w> :tabclose<CR>
 
 " Epic shortcut to load your last session
 nmap <F3> <ESC>:call LoadSession()<CR>
