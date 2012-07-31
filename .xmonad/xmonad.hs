@@ -14,6 +14,7 @@ import XMonad.Actions.WindowGo
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
 import XMonad.Layout.Named
 import XMonad.Layout.ResizableTile
@@ -34,7 +35,7 @@ import SpecialKeys
 import WorkspaceCompare
 
 myTopStatusBar :: String
-myTopStatusBar = "/home/aurum/topstatusbar.sh"
+myTopStatusBar = "/home/aurum/.xmonad/topstatusbar.sh"
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -80,7 +81,7 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["1:Monitor","2:Chat","3:Music","4:Web","5:Code","6:Text","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -170,7 +171,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    --, ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
     , ((modm              , xK_q     ), do io killPanels; recompile False; restart "xmonad" True)
 
     -- Shrink mirror
@@ -179,11 +179,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Expand mirror
     , ((modm .|. shiftMask, xK_l     ), sendMessage MirrorExpand)
 
-    -- Lower PCM volume.
-    , ((0, xK_XF86AudioLowerVolume), spawn "amixer -q set PCM 1dB-")
+    -- Lower master volume.
+    , ((0, xK_XF86AudioLowerVolume), spawn "amixer -q set Master 1dB-")
 
-    -- Raise PCM volume.
-    , ((0, xK_XF86AudioRaiseVolume), spawn "amixer -q set PCM 1dB+")
+    -- Raise master volume.
+    , ((0, xK_XF86AudioRaiseVolume), spawn "amixer -q set Master 1dB+")
 
     -- Locks the screen.
     , ((modm .|. shiftMask, xK_backslash), spawn "xlock")
@@ -196,6 +196,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Synchronize mail.
     , ((modm, xK_p), spawn "fetchmail")
+
+    -- Open calendar.
+    , ((modm, xK_c), raiseMaybe (runInTerm "-title calcurse" "bash -c 'calcurse'") (title =? "calcurse"))
+
+    -- Pause/play music
+    , ((modm              , xK_a), spawn "cmus-remote -u")
+
+    -- Play next music
+    , ((modm              , xK_d), spawn "cmus-remote -n")
+
+    -- Play prev music
+    , ((modm              , xK_s), spawn "cmus-remote -r")
+
+    -- Play prev music
+    , ((modm              , xK_z), spawn "cmus-remote -k 0")
 
     ---- Use disper to extend screen to left, up, right, down
     , ((modm .|. controlMask, xK_Left), spawn "disper -e -t left && killall conky && xmonad --restart")
@@ -293,29 +308,30 @@ myManageHook = composeAll . concat $
     , [resource  =? "desktop_window" --> doIgnore]
     , [resource  =? "kdesktop"       --> doIgnore]
     , [title     =? "mutt"           --> doRectFloat defaultFloatRect]
-    --, isFullscreen                  --> (doF W.focusDown <+> doFullFloat)
+    , [title     =? "calcurse"           --> doRectFloat defaultFloatRect]
+    , [title     =? "qemu"           --> doRectFloat defaultFloatRect]
     , [isFullscreen                  --> doFullFloat]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1" | x <- my1Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2" | x <- my2Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3" | x <- my3Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "4" | x <- my4Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "5" | x <- my5Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "6" | x <- my6Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1:Monitor" | x <- my1Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2:Chat" | x <- my2Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3:Music" | x <- my3Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "4:Web" | x <- my4Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "5:Code" | x <- my5Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "6:Text" | x <- my6Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "7" | x <- my7Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "8" | x <- my8Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "9" | x <- my9Shifts]
     ]
     where
         defaultFloatRect = W.RationalRect 0 0 0.5 0.5
-        my1Shifts = []
-        my2Shifts = []
-        my3Shifts = []
-        my4Shifts = []
+        my1Shifts = ["htop"]
+        my2Shifts = ["Skype"]
+        my3Shifts = ["cmus"]
+        my4Shifts = ["Firefox"]
         my5Shifts = []
-        my6Shifts = []
+        my6Shifts = ["evince"]
         my7Shifts = []
-        my8Shifts = ["Skype"]
-        my9Shifts = ["Firefox"]
+        my8Shifts = []
+        my9Shifts = []
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -338,11 +354,18 @@ myEventHook = mempty
 -- My PP to be used with DynamicLog.
 myPP = defaultPP {
     ppSort = getSortByXineramaPhysicalRule
-    }
+}
 
-myLogHook pipes = dynamicLogWithPP myPP {
-    ppOutput = (\s -> mapM_ (\pipe -> hPutStrLn pipe s) pipes)
-    }
+-- myLogHook pipes = dynamicLogWithPP myPP {
+myLogHook pipes = dynamicLogWithPP $ defaultPP {
+    ppOutput = (\s -> mapM_ (\pipe -> hPutStrLn pipe s) pipes),
+    ppCurrent = dzenColor "yellow" "black",
+    ppVisible = dzenColor "lightyellow" "",
+    ppHidden = dzenColor "white" "",
+    ppHiddenNoWindows = dzenColor "#444444"  "",
+    ppUrgent = dzenColor "" "red",
+    ppTitle = dzenColor "cyan" "" . shorten 50
+}
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -356,9 +379,12 @@ myStartupHook = do
 	-- Trick Java so that it thinks XMonad is a non-reparenting WM.
 	setWMName "LG3D"
 
-	-- Set background image.
-	-- spawn "~/.fehbg"
- 
+    -- Start up programs
+	spawn "~/.fehbg"
+	spawn "/usr/bin/xterm -T htop htop"
+	spawn "/usr/bin/xterm -T cmus cmus"
+	spawn "/usr/bin/firefox"
+
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
@@ -375,13 +401,13 @@ main = do
 --
 -- No need to modify this.
 --
-myXConfig pipes = defaultConfig {
+myXConfig pipes = withUrgencyHook NoUrgencyHook defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-        numlockMask        = myNumlockMask,
+        -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,

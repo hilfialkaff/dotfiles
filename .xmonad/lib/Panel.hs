@@ -21,18 +21,18 @@ data DzenFlags = DzenFlags {
     dzen_bg :: String,
     dzen_ta :: String,
     dzen_extra :: String
-    }
+}
 
 defaultDzenFlags = DzenFlags {
     dzen_x = 0,
     dzen_y = 0,
-    dzen_w = 768,
+    dzen_w = 1366,
     dzen_fn = "-*-fixed-*-*-*-*-12-*-*-*-*-*-*-*",
     dzen_fg = "cyan",
     dzen_bg = "black",
     dzen_ta = "l",
     dzen_extra = ""             -- This should only single quotes in it.
-    }
+}
 
 dzen :: DzenFlags -> String
 dzen conf = intercalate " "
@@ -59,7 +59,7 @@ rectToDynamicLogDzen (Rectangle x y w h) = dzen defaultDzenFlags {
     dzen_y = round (fromIntegral y),
     dzen_w = round (fromIntegral w / 2),
     dzen_ta = "l"
-    }
+}
 
 rectToMonitorDzen :: Rectangle -> String
 rectToMonitorDzen (Rectangle x y w h) = dzen defaultDzenFlags {
@@ -67,7 +67,7 @@ rectToMonitorDzen (Rectangle x y w h) = dzen defaultDzenFlags {
     dzen_y = round (fromIntegral y),
     dzen_w = round (fromIntegral w / 2),
     dzen_ta = "r"
-    }
+}
 
 getScreens :: IO [Rectangle]
 getScreens = do
