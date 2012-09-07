@@ -288,7 +288,7 @@ endfun
 " }}}
 
 if version >= 700
-  call s:X("CursorLine","","1c1c1c","","","")
+  " call s:X("CursorLine","","1c1c1c","","","")
   call s:X("CursorColumn","","1c1c1c","","","")
   call s:X("MatchParen","ffffff","80a090","bold","","")
 
@@ -332,6 +332,7 @@ call s:X("Function","fad07a","","","Yellow","")
 call s:X("Statement","8197bf","","","DarkBlue","")
 call s:X("PreProc","8fbfdc","","","LightBlue","")
 
+hi CursorLine   term=underline cterm=underline guibg=Grey40 guifg=1c1c1c
 hi link Operator Normal
 
 call s:X("Type","ffb964","","","Yellow","")
