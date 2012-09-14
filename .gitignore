@@ -1,6 +1,13 @@
+# ignore xmonad auto-gen files
 *.o
 *.hi
 *.errors
 history
 xmonad-x86_64-linux
+
+# ignore pentadactyl/vimperator auto-gen files
 *info/
+
+# ignore vim auto-gen files
+.VimballRecord
+.netrwhist
