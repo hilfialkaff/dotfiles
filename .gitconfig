@@ -1,0 +1,20 @@
+[user]
+	name = Hilfi M. Alkaff
+	email = hilfialkaff@gmail.com
+[color]
+    ui = true
+
+[color "branch"]
+    current = blue
+    local = yellow
+    remote = magenta
+
+[color "diff"]
+    meta = yellow
+    frag = magenta
+    old = red
+    new = blue
+
+[color "status"]
+    added = yellow
+    changed = blue
