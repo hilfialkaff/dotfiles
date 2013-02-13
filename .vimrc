@@ -27,6 +27,7 @@ set smartcase                 " Ignore case if search pattern is all lowercase,c
 " Tabs
 set ts=4                      " Set tabspacing to be 4
 set expandtab                 " Expand tabs into spaces
+set softtabstop=4             " Backspace -> delete 4 spaces
 
 " Folds
 set foldenable                " Enable folding
@@ -38,21 +39,17 @@ setlocal spell spelllang=en_us
 set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 " Enable omni completion.
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-" autocmd FileType c set omnifunc=ccomplete#Complete
-" autocmd FileType java set omnifunc=javacomplete#Complete
-" 
-" " use syntax complete if nothing else available
-" if has("autocmd") && exists("+omnifunc")
-"   autocmd Filetype *
-"               \ if &omnifunc == "" |
-"               \ setlocal omnifunc=syntaxcomplete#Complete |
-"               \ endif
-" endif
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType java set omnifunc=javacomplete#Complete
+" autocmd FileType cpp set omnifunc=cppcomplete#Complete
+
+" use syntax complete if nothing else available
+if has("autocmd") && exists("+omnifunc")
+  autocmd Filetype *
+              \ if &omnifunc == "" |
+              \ setlocal omnifunc=syntaxcomplete#Complete |
+              \ endif
+endif
 
 " autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif " Eliminate trailing whitespaces
 
@@ -77,10 +74,8 @@ noremap <c-l> <c-w>l
 noremap <c-h> <c-w>h
 
 " cscope shortcuts
-if has("cscope")
-    noremap <A-]>v :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-    noremap <A-]>h :sp <CR>:exec("tag ".expand("<cword>"))<CR>
-endif
+map <A-]>v :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]>h :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Folding
 nnoremap <Space> zA
@@ -98,6 +93,9 @@ noremap <silent> <S-h> :tabprevious<CR>
 noremap <silent> <S-t> :tabnew<CR>
 noremap <silent> <S-w> :tabclose<CR>
 
+" Blackhole register
+noremap <c-d> "_
+
 " Epic shortcut to load your last session
 nmap <F3> <ESC>:call LoadSession()<CR>
 let s:sessionloaded = 0
@@ -112,9 +110,25 @@ function SaveSession()
 endfunction
 autocmd VimLeave * call SaveSession()
 
+" Generate ctags for your C++ code
+map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " --- SuperTab
 let g:SuperTabDefaultCompletionType = "context" " Use omnicompletion
+
+" --- OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif " open/close preview window
+set completeopt=menuone,menu,longest,preview
+set tags+=~/.vim/tags/cpp
