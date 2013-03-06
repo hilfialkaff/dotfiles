@@ -35,12 +35,12 @@ import SpecialKeys
 import WorkspaceCompare
 
 myTopStatusBar :: String
-myTopStatusBar = "/home/aurum/.xmonad/topstatusbar.sh"
+myTopStatusBar = "/home/$USER/.xmonad/topstatusbar.sh"
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "xterm"
+myTerminal      = "xterm -bg black -fg green"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -81,12 +81,12 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1:Monitor","2:Chat","3:Music","4:Web","5:Code","6:Text","7","8","9"]
+myWorkspaces    = ["1:Monitor","2:Chat","3:Music","4:Web","5:Code","6:Text","7:VM","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#00ff00"
+myFocusedBorderColor = "#ff00ff"
 
 -- My XPKeymap for my XPConfig
 myXPKeymap = M.insert (controlMask, xK_bracketleft) quit defaultXPKeymap
@@ -212,6 +212,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Play prev music
     , ((modm              , xK_z), spawn "cmus-remote -k 0")
 
+    -- Synchronize mail.
+    , ((modm, xK_v), spawn "virtualbox")
+
     ---- Use disper to extend screen to left, up, right, down
     , ((modm .|. controlMask, xK_Left), spawn "disper -e -t left && killall conky && xmonad --restart")
     , ((modm .|. controlMask, xK_Up), spawn "disper -e -t up && killall conky && xmonad --restart")
@@ -328,7 +331,7 @@ myManageHook = composeAll . concat $
         my3Shifts = ["cmus"]
         my4Shifts = ["Firefox"]
         my5Shifts = []
-        my6Shifts = ["evince"]
+        my6Shifts = ["evince", "okular"]
         my7Shifts = []
         my8Shifts = []
         my9Shifts = []

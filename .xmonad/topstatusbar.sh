@@ -5,7 +5,7 @@ BAR_H=8
 SMABAR_W=30
 WIDTH=1366
 HEIGHT=14
-X_POS=680
+X_POS=740
 Y_POS=0
 
 #Look and feel
@@ -21,8 +21,8 @@ FONT="-*-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
 
 #Options
 IFS='|' #internal field separator (conky)
-CONKYFILE="/home/aurum/.conkyrc"
-ICONPATH="/home/aurum/.xmonad/icons/"
+CONKYFILE="/home/$USER/.conkyrc"
+ICONPATH="/home/$USER/.xmonad/icons/"
 INTERVAL=1
 
 # CPUTemp=0
@@ -141,7 +141,13 @@ printTimeInfo() {
 
 printWifi() {
     echo -n "^fg($COLOR_ICON)^i($ICONPATH/wifi.xbm):"
-    echo -n "^fg($DZEN_FG1) $(iwgetid | awk -F ":" '{print $2}'|sed -e 's/"//g')" # $(iwconfig wlan0 | grep "Link Quality" | awk '{ print $2 }')"
+    if [ `cat /sys/class/net/eth0/carrier` -eq 1 ]
+    then
+        echo -n "^fg($DZEN_FG1) wired"
+    else
+        echo -n "^fg($DZEN_FG1) $(iwgetid | awk -F ":" '{print $2}'|sed -e 's/"//g')" # $(iwconfig wlan0 | grep "Link Quality" | awk '{ print $2 }')"
+    fi
+
     return
 }
 
@@ -175,8 +181,8 @@ printBar() {
         printSpace
         printMusic
         printSpace
-        printMail
-        printSpace
+        # printMail
+        # printSpace
         printBattery
         printSpace
         printVolume
