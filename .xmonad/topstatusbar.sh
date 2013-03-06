@@ -143,9 +143,16 @@ printWifi() {
     echo -n "^fg($COLOR_ICON)^i($ICONPATH/wifi.xbm):"
     if [ `cat /sys/class/net/eth0/carrier` -eq 1 ]
     then
-        echo -n "^fg($DZEN_FG1) wired"
+        echo -n "^fg($DZEN_FG1) Wired"
     else
-        echo -n "^fg($DZEN_FG1) $(iwgetid | awk -F ":" '{print $2}'|sed -e 's/"//g')" # $(iwconfig wlan0 | grep "Link Quality" | awk '{ print $2 }')"
+        wifi=`iwgetid | awk -F ":" '{print $2}'|sed -e 's/"//g'`
+
+        if [ -z "$wifi" ]
+        then
+            echo -n "^fg($DZEN_FG1) None"
+        else
+            echo -n "^fg($DZEN_FG1) $wifi" # $(iwconfig wlan0 | grep "Link Quality" | awk '{ print $2 }')"
+        fi
     fi
 
     return
