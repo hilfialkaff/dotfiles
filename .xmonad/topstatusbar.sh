@@ -5,7 +5,7 @@ BAR_H=8
 SMABAR_W=30
 WIDTH=1366
 HEIGHT=14
-X_POS=740
+X_POS=680
 Y_POS=0
 
 #Look and feel
@@ -171,7 +171,7 @@ printSpace() {
 
 # XXX: Hack to fill in black screen due to .fehbg bug
 printFill() {
-    echo -n "       "
+    echo -n "                "
 }
 
 printBar() {

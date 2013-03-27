@@ -328,7 +328,7 @@ myManageHook = composeAll . concat $
         defaultFloatRect = W.RationalRect 0 0 0.5 0.5
         my1Shifts = ["htop"]
         my2Shifts = ["Skype"]
-        my3Shifts = ["cmus"]
+        my3Shifts = ["cmus", "spotify"]
         my4Shifts = ["Firefox"]
         my5Shifts = []
         my6Shifts = ["evince", "okular"]
@@ -385,7 +385,7 @@ myStartupHook = do
     -- Start up programs
 	spawn "~/.fehbg"
 	spawn "/usr/bin/xterm -T htop htop"
-	spawn "/usr/bin/xterm -T cmus cmus"
+	spawn "/usr/bin/xterm -T spotify spotify"
 	spawn "/usr/bin/firefox"
 
 ------------------------------------------------------------------------
