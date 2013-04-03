@@ -81,7 +81,7 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1:Monitor","2:Chat","3:Music","4:Web","5:Code","6:Text","7:VM","8","9"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -314,12 +314,12 @@ myManageHook = composeAll . concat $
     , [title     =? "calcurse"           --> doRectFloat defaultFloatRect]
     , [title     =? "qemu"           --> doRectFloat defaultFloatRect]
     , [isFullscreen                  --> doFullFloat]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1:Monitor" | x <- my1Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2:Chat" | x <- my2Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3:Music" | x <- my3Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "4:Web" | x <- my4Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "5:Code" | x <- my5Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "6:Text" | x <- my6Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1" | x <- my1Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2" | x <- my2Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3" | x <- my3Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "4" | x <- my4Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "5" | x <- my5Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "6" | x <- my6Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "7" | x <- my7Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "8" | x <- my8Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "9" | x <- my9Shifts]

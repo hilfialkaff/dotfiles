@@ -5,7 +5,7 @@ BAR_H=8
 SMABAR_W=30
 WIDTH=1366
 HEIGHT=14
-X_POS=680
+X_POS=300
 Y_POS=0
 
 #Look and feel
@@ -23,6 +23,7 @@ FONT="-*-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
 IFS='|' #internal field separator (conky)
 CONKYFILE="/home/$USER/.conkyrc"
 ICONPATH="/home/$USER/.xmonad/icons/"
+QUOTEPATH="/home/raijin/.xmonad/files/quotes"
 INTERVAL=1
 
 # CPUTemp=0
@@ -171,10 +172,16 @@ printSpace() {
 
 # XXX: Hack to fill in black screen due to .fehbg bug
 printFill() {
-    echo -n "                "
+    echo -n "                                   "
+}
+
+printQuotes() {
+    quote=`cat $QUOTEPATH | head -n $1| tail -n 1`
+    echo -n "^fg($DZEN_FG1) $quote"
 }
 
 printBar() {
+    index=0
     while true; do
         # read CPULoad0 CPULoad1 CPULoad2 CPULoad3
         # printKerInfo
@@ -184,12 +191,14 @@ printBar() {
         # printSpace
         # printFileInfo
         # printSpace
-        printFill
-        printSpace
-        printMusic
-        printSpace
+        # printMusic
+        # printSpace
         # printMail
         # printSpace
+
+        # printFill
+        num_line=$(( `cat $QUOTEPATH | wc -l` ))
+        printSpace
         printBattery
         printSpace
         printVolume
@@ -197,6 +206,12 @@ printBar() {
         printTimeInfo
         printSpace
         printWifi
+        printSpace
+        if [ $(( `date +%s`%30 )) -eq 0 ]; then
+            index=$(( $RANDOM%$num_line ))
+        fi
+        printQuotes $index
+
         echo
         sleep $INTERVAL
     done
