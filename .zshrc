@@ -1,25 +1,37 @@
-# Use color xterm when possible
-if [ -e /lib/terminfo/x/xterm-256color ]; then
-    export TERM='xterm-256color'
-else
-    export TERM='xterm-color'
-fi
+export TERM='xterm-256color'
 
-if [[ -f ~/.dir_colors ]] ; then
-    eval $(dircolors -b ~/.dir_colors)
-fi
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/files/misc/oh-my-zsh/
 
-# Bash completion if available
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="raijin"
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git-flow history-substring-search)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
 
 # Colored directory 
 eval $(dircolors -b ~/.dircolors)
-
-# Fun color for bash prompt
-PS1='\[\e[00;33m\]\n\w \[\e[1;30m\]
-\[\e[01;36m\]\u\[\e[31;1m\]@\[\e[01;36m\]\h\[\e[33;1m\]($(printf "%03d" "$?"))\[\033[00m\]:\$ '
 
 # Use vim for everything!
 export EDITOR=vim
@@ -33,26 +45,23 @@ stty -ixon
 
 # Where to look for binaries/shell commands
 PATH="/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core"
-PATH="/home/aurum/downloads/jdk1.7.0_02/bin/:$PATH"
-PATH="/home/aurum/packages/heroku-client/:$PATH"
-PATH="/home/raijin/files/packages/omnetpp-4.1/bin/":$PATH
-PATH="/home/raijin/files/packages/yii/framework/":$PATH
-PATH="/home/raijin/files/research/crowdwatch/kernel/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin:$PATH"
-PATH="/home/raijin/downloads/adt-bundle-linux-x86/sdk/platform-tools/:$PATH"
+PATH="$HOME/files/packages/omnetpp-4.1/bin/":$PATH
+PATH="$HOME/files/packages/yii/framework/":$PATH
+PATH="$HOME/files/research/crowdwatch/kernel/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin:$PATH"
+PATH="$HOME/downloads/adt-bundle-linux-x86/sdk/platform-tools/:$PATH"
+PATH="$HOME/files/research/tomography/hadoop-1.1.2/bin:$PATH"
 
 # Where to look for libraries
 LD_LIBRARY_PATH="/usr/local/lib/:/usr/lib/:/usr/lib32/:/lib/"
 LD_LIBRARY_PATH="/home/raijin/files/research/crowdwatch/code/ns-allinone-2.34/otcl-1.13:/home/raijin/files/research/crowdwatch/code/ns-allinone-2.34/lib:$LD_LIBRARY_PATH"
 LD_LIBRARY_PATH="/home/raijin/files/packages/omnetpp-4.1/lib/:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export JAVA_HOME="/usr/lib/jvm/java-1.6.0-openjdk"
 
 # TCL library location
 export TCL_LIBRARY=/usr/share/tcltk/tcl8.5
 
 GIT_PAGER=""
-
-# Sets the Mail Environment Variable
-MAIL=/var/spool/mail/aurum && export MAIL
 
 #########################################################################################
 # Shortcuts
@@ -65,6 +74,8 @@ alias l='ls'
 alias grep='grep --color'
 alias fw='grep * -r -e'
 alias ff='find . | grep'
+alias vol='pavucontrol'
+alias recompile='source ~/files/misc/oh-my-zsh/oh-my-zsh.sh'
 function setup_cscope () { CSCOPE_DB=`pwd`; export CSCOPE_DB; }
 
 # Long command short cut
@@ -73,19 +84,25 @@ alias autolock='xautolock -time 10 -locker xlock -nowlocker xlock -detectsleep &
 
 # Alias for programs
 alias firefox='firefox > /dev/null 2> /dev/null &'
+alias spotify='spotify > /dev/null 2> /dev/null &'
 alias skype='skype > /dev/null 2> /dev/null &'
 alias lmake='make -j4 2> make.err'
+alias mmake='make -C ../../../../ M=$PWD -j4'
 alias python='python2.7'
 alias diff='colordiff'
 alias openflow='ssh -X openflow@192.168.56.101'
+alias fvctl='fvctl --passwd-file=/home/raijin/files/research/netvirt/flowvisor/passwd'
 
 # Most accessed directories
 alias cd241='cd /home/raijin/files/classes/uiuc/cs241/'
-alias cd425='cd /home/raijin/files/classes/uiuc/cs425/'
+alias cd425='cd /home/raijin/files/classes/uiuc/cs425_sp13/'
+alias cd525='cd /home/raijin/files/classes/uiuc/cs525/'
+alias cd598='cd /home/raijin/files/classes/uiuc/cs598_mcc/'
 alias cd538='cd /home/raijin/files/classes/uiuc/cs538/'
 alias cdjelly='cd /home/raijin/files/research/jellyfish/'
 alias cdcrowd='cd /home/raijin/files/research/crowdwatch/'
-alias cdsdn='cd /home/raijin/files/research/sdn/'
+alias cdnetvirt='cd /home/raijin/files/research/netvirt/'
+alias cdtomo='cd /home/raijin/files/research/tomography/'
 alias cdsri='cd /home/raijin/files/projects/sri/'
 
 # SSH/sftp alias
@@ -111,3 +128,10 @@ export PATH="/home/raijin/perl5/bin:$PATH";
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# bind UP and DOWN arrow keys
+for keycode in '[' '0'; do
+  bindkey "^[${keycode}A" history-substring-search-up
+  bindkey "^[${keycode}B" history-substring-search-down
+done
+unset keycode
