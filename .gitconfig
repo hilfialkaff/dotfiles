@@ -1,8 +1,11 @@
 [user]
 	name = Hilfi M. Alkaff
-	email = hilfialkaff@gmail.com
+	email = alkaff2@illinois.edu
 [color]
     ui = true
+	diff = auto
+	status = auto
+	branch = auto
 
 [color "branch"]
     current = blue
@@ -18,3 +21,6 @@
 [color "status"]
     added = yellow
     changed = blue
+
+[core]
+	excludesfile = ~/.gitignore_global

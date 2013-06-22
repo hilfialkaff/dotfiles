@@ -1,0 +1,14 @@
+make.err
+
+# vim stuff
+Session.vim
+*.swp
+
+# cscope & ctags
+build_cscope.sh
+cscope.*
+tags
+
+# cpp files
+*.o
+*.out
