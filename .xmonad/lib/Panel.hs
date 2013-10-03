@@ -81,7 +81,7 @@ spawnPanels = do
     screens <- getScreens
     -- let outplexArgs = map (doubleQuote . rectToMonitorDzen) screens
     -- spawn $ "conky -c ~/.conky/monitor | outplex " ++ intercalate " " outplexArgs ++ " > /dev/null"
-    -- spawn $ "/home/aurum/downloads/topstatusbar.sh"
+    -- spawn $ "/home/raijin/.xmonad/scripts/topstatusbar.sh"
     mapM (spawnPipe . rectToDynamicLogDzen) screens
 
 killPanels :: IO ()

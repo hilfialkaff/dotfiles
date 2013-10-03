@@ -35,12 +35,12 @@ import SpecialKeys
 import WorkspaceCompare
 
 myTopStatusBar :: String
-myTopStatusBar = "/home/$USER/.xmonad/topstatusbar.sh"
+myTopStatusBar = "/home/raijin/.xmonad/scripts/topstatusbar.sh"
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "xterm -bg black -fg green"
+myTerminal      = "xterm -bg black -fg green -e /bin/zsh"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -189,7 +189,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_backslash), spawn "xlock")
 
     -- Takes screenshot
-    , ((modm              , xK_Print), spawn "scrot ~/pictures/screen_%Y-%m-%d.png -d 1")
+    , ((modm              , xK_Print), spawn "scrot /home/raijin/files/pictures/screen_%Y-%m-%d.png -d 1")
 
     -- Open mail.
     , ((modm, xK_o), raiseMaybe (runInTerm "-title mutt" "bash -c 'mutt'") (title =? "mutt"))
@@ -216,10 +216,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_v), spawn "virtualbox")
 
     ---- Use disper to extend screen to left, up, right, down
-    , ((modm .|. controlMask, xK_Left), spawn "disper -e -t left && killall conky && xmonad --restart")
-    , ((modm .|. controlMask, xK_Up), spawn "disper -e -t up && killall conky && xmonad --restart")
-    , ((modm .|. controlMask, xK_Right), spawn "disper -e -t right && killall conky && xmonad --restart")
-    , ((modm .|. controlMask, xK_Down), spawn "disper -e -t down && killall conky && xmonad --restart")
+    , ((modm .|. controlMask, xK_Left), spawn "disper -e -t left && killall topstatusbar && xmonad --restart")
+    , ((modm .|. controlMask, xK_Up), spawn "disper -e -t up && killall topstatusbar && xmonad --restart")
+    , ((modm .|. controlMask, xK_Right), spawn "disper -e -t right && killall topstatusbar && xmonad --restart")
+    , ((modm .|. controlMask, xK_Down), spawn "disper -e -t down && killall topstatusbar && xmonad --restart")
     ]
     ++
 
@@ -384,7 +384,8 @@ myStartupHook = do
 
     -- Start up programs
 	spawn "~/.fehbg"
-	spawn "/usr/bin/xterm -T htop htop"
+	spawn "/usr/bin/xterm -bg black -fg green -T wicd-curses wicd-curses"
+	spawn "/usr/bin/xterm -bg black -fg green -T htop htop"
 	spawn "/usr/bin/xterm -T spotify spotify"
 	spawn "/usr/bin/firefox"
 
