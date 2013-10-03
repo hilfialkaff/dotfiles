@@ -1,7 +1,7 @@
 export TERM='xterm-256color'
 
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/files/misc/oh-my-zsh/
+ZSH=$HOME/files/projects/dotfiles/oh-my-zsh/
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -30,7 +30,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-# Colored directory 
+# Colored directory
 eval $(dircolors -b ~/.dircolors)
 
 # Use vim for everything!
@@ -45,11 +45,17 @@ stty -ixon
 
 # Where to look for binaries/shell commands
 PATH="/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/bin/perlbin/site:/usr/bin/perlbin/vendor:/usr/bin/perlbin/core"
+PATH="$HOME/bin/:$PATH"
 PATH="$HOME/files/packages/omnetpp-4.1/bin/":$PATH
-PATH="$HOME/files/packages/yii/framework/":$PATH
 PATH="$HOME/files/research/crowdwatch/kernel/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin:$PATH"
 PATH="$HOME/downloads/adt-bundle-linux-x86/sdk/platform-tools/:$PATH"
-PATH="$HOME/files/research/tomography/hadoop-1.1.2/bin:$PATH"
+PATH="$HOME/files/packages/scala-2.9.3/bin/:$PATH"
+PATH="$HOME/files/research/tomography/repo/impl/hadoop-2.1.0-beta-src/hadoop-dist/target/hadoop-2.1.0-beta/bin:$PATH"
+PATH="$HOME/files/research/tomography/repo/impl/hadoop-2.1.0-beta-src/hadoop-dist/target/hadoop-2.1.0-beta/sbin:$PATH"
+PATH="$HOME/files/packages/play-2.1.1/:$PATH"
+PATH="$HOME/files/packages/matlab/bin:$PATH"
+PATH="$HOME/files/packages/eclipse/:$PATH"
+PATH="$HOME/files/packages/gsutil:$PATH"
 
 # Where to look for libraries
 LD_LIBRARY_PATH="/usr/local/lib/:/usr/lib/:/usr/lib32/:/lib/"
@@ -57,6 +63,8 @@ LD_LIBRARY_PATH="/home/raijin/files/research/crowdwatch/code/ns-allinone-2.34/ot
 LD_LIBRARY_PATH="/home/raijin/files/packages/omnetpp-4.1/lib/:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export JAVA_HOME="/usr/lib/jvm/java-1.6.0-openjdk"
+export JRE_LOC="/usr/lib/jvm/java-6-openjdk-i386/jre/"
+export SCALA_HOME="/home/raijin/files/packages/scala-2.9.3"
 
 # TCL library location
 export TCL_LIBRARY=/usr/share/tcltk/tcl8.5
@@ -80,6 +88,15 @@ function setup_cscope () { CSCOPE_DB=`pwd`; export CSCOPE_DB; }
 
 # Long command short cut
 alias connect_wpa='sudo wpa_supplicant -i wlan0 -B -D wext -c /etc/wpa_supplicant.conf && sudo dhcpcd wlan0'
+
+# Wicd bug hack
+function restart_inet() {
+    sudo iwconfig wlan0 power off;
+    sudo rmmod iwlwifi;
+    sudo modprobe iwlwifi;
+    sudo iwconfig wlan0 power on;
+    sudo ifconfig wlan0 up
+}
 alias autolock='xautolock -time 10 -locker xlock -nowlocker xlock -detectsleep &'
 
 # Alias for programs
@@ -95,7 +112,7 @@ alias fvctl='fvctl --passwd-file=/home/raijin/files/research/netvirt/flowvisor/p
 
 # Most accessed directories
 alias cd241='cd /home/raijin/files/classes/uiuc/cs241/'
-alias cd425='cd /home/raijin/files/classes/uiuc/cs425_sp13/'
+alias cd425='cd /home/raijin/files/classes/uiuc/cs425_fa13/'
 alias cd525='cd /home/raijin/files/classes/uiuc/cs525/'
 alias cd598='cd /home/raijin/files/classes/uiuc/cs598_mcc/'
 alias cd538='cd /home/raijin/files/classes/uiuc/cs538/'
@@ -115,10 +132,15 @@ alias sftpengr='sftp alkaff2@ssh.courses.engr.illinois.edu'
 alias sshgrader='ssh alkaff2@siebl-0403a-07.ews.illinois.edu'
 alias sftpgrader='sftp alkaff2@siebl-0403a-07.ews.illinois.edu'
 
+alias sshtomo='ssh halkaff@client-1.tomography.uiucnet.emulab.net'
+alias sftptomo='sftp halkaff@client-1.tomography.uiucnet.emulab.net'
+alias sshemulab='ssh halkaff@users.emulab.net'
+
 #########################################################################################
 # External script
 #########################################################################################
 source ~/.bash/svn.sh
+source ~/files/research/tomography/repo/impl/hadoop-2.1.0-beta-src/env.sh
 
 export PERL_LOCAL_LIB_ROOT="/home/raijin/perl5";
 export PERL_MB_OPT="--install_base /home/raijin/perl5";
