@@ -139,8 +139,13 @@ alias sshemulab='ssh halkaff@users.emulab.net'
 #########################################################################################
 # External script
 #########################################################################################
-source ~/.bash/svn.sh
-source ~/files/research/tomography/repo/impl/hadoop-2.1.0-beta-src/env.sh
+if [[ -f ~/.bash/svn.sh ]] ; then
+  source ~/.bash/svn.sh
+fi
+
+if [[ -f ~/files/research/tomography/repo/impl/hadoop-2.1.0-beta-src/env.sh ]] ; then
+  source ~/files/research/tomography/repo/impl/hadoop-2.1.0-beta-src/env.sh
+fi
 
 export PERL_LOCAL_LIB_ROOT="/home/raijin/perl5";
 export PERL_MB_OPT="--install_base /home/raijin/perl5";
