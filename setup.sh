@@ -4,3 +4,4 @@ cp .zshrc ~
 cp .vim* ~ -r
 cp .gitconfig ~
 cp .gitignore_global ~
+cp .dircolors ~
