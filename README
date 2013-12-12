@@ -1,1 +1,4 @@
-Various configuration files used in my computer.
+Linux dotfiles goodness.
+
+For setting up, run (Warning, it may overwrite some config files in your computer):
+$: ./setup.sh
