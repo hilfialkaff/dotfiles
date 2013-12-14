@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Uses rsync to synchronize directories
+
+user=$1
+server=$2
+local_dir=$3
+remote_dir=$4
+
+rsync -uptorgvHaz $local_dir $user@$server:$remote_dir

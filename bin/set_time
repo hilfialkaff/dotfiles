@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Set current time in UNIX system
+
+time=$1
+sudo hwclock --set --date=$time; sudo hwclock -s
