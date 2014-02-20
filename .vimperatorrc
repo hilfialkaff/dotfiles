@@ -2,13 +2,13 @@
 " General Options
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set complete=l " Only display firefox history when opening prompt "
-set incfind " Display all search occurences "
-set hlfind " Highlight search occurrences "
-set defsearch=duckduckgo " Use duckduckgo search engine "
-set tabnumbers " Numbered tabs "
-set urlseparator="" " Never open multiple URLs at the same time "
-colorscheme neverland
+set complete=l              " Only display firefox history when opening prompt
+set incfind                 " Display all search occurences
+set hlfind                  " Highlight search occurrences
+set defsearch=duckduckgo    " Use duckduckgo search engine
+set tabnumbers              " Numbered tabs
+set urlseparator=""         " Never open multiple URLs at the same time
+colorscheme neverland       " Good colors
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Keybindings
