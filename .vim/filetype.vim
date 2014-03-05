@@ -4,3 +4,4 @@ autocmd! BufNewFile,BufRead *.vimp* setlocal ft=vim
 autocmd! BufNewFile,BufRead *.ned setlocal ft=ned
 autocmd! BufNewFile,BufRead *.scala setlocal ft=scala
 autocmd! BufNewFile,BufRead *.go setlocal ft=go
+autocmd! BufNewFile,BufRead *.j2 setlocal ft=jinja

@@ -2,41 +2,44 @@
 " General Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nu                        " Shows line numbers
-" set tw=80                     " 80 chars in a line
-set clipboard=unnamed         " Copying from terminal buffer
-set wildmode=longest,list     " Display tab completion in nice format
-set ruler                     " show the cursor position all the time
-set showmatch                 " Cursor shows matching ) and }
-set history=500               " Remember 500 past commands
-set undolevels=1000           " Max number of undos
-set cursorline                " Highlight current line
-colorscheme jellybeans        " Colorscheme
-syntax on                     " Colored programming syntax
-filetype plugin on            " File specific config
+set nocompatible
+set backspace=indent,eol,start   " Ensure backspace is enabled
+set nu                           " Shows line numbers
+" set tw=80                        " 80 chars in a line
+set clipboard=unnamed            " Copying from terminal buffer
+set wildmode=longest,list        " Display tab completion in nice format
+set ruler                        " show the cursor position all the time
+set showmatch                    " Cursor shows matching ) and }
+set history=500                  " Remember 500 past commands
+set undolevels=1000              " Max number of undos
+set cursorline                   " Highlight current line
+colorscheme jellybeans           " Colorscheme
+syntax on                        " Colored programming syntax
+filetype plugin on               " File specific config
 
 " Indentation
-set autoindent                " Auto indentation
-set copyindent                " Copy the previous indentation on autoindenting
+set autoindent                   " Auto indentation
+set copyindent                   " Copy the previous indentation on autoindenting
 
 " Searching
-set incsearch                 " Display all search occurences
-set hlsearch                  " Highlight search occurrences
-set smartcase                 " Ignore case if search pattern is all lowercase,case-sensitive otherwise
+set incsearch                    " Display all search occurences
+set hlsearch                     " Highlight search occurrences
+set smartcase                    " Ignore case if search pattern is all lowercase,case-sensitive otherwise
 
 " Tabs
-set ts=4                      " Set tabspacing to be 4
-set expandtab                 " Expand tabs into spaces
-set softtabstop=4             " Backspace -> delete 4 spaces
+set ts=4                         " Set tabspacing to be 4
+set expandtab                    " Expand tabs into spaces
+set softtabstop=4                " Backspace -> delete 4 spaces
 
 " Folds
-set foldenable                " Enable folding
-set foldlevelstart=0          " Start out with everything folded
-set foldmethod=syntax         " Fold by per-language-syntax
+set foldenable                   " Enable folding
+set foldlevelstart=0             " Start out with everything folded
+set foldmethod=syntax            " Fold by per-language-syntax
 
 " Being grammar nazi
-setlocal spell spelllang=en_us
-set thesaurus+=~/.vim/thesaurus/mthesaur.txt
+" set spell
+" setlocal spell spelllang=en_us
+" set thesaurus+=~/.vim/thesaurus/mthesaur.txt
 
 " Enable omni completion.
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -45,13 +48,13 @@ autocmd FileType java set omnifunc=javacomplete#Complete
 
 " use syntax complete if nothing else available
 if has("autocmd") && exists("+omnifunc")
-  autocmd Filetype *
-              \ if &omnifunc == "" |
-              \ setlocal omnifunc=syntaxcomplete#Complete |
-              \ endif
+    autocmd Filetype *
+    if &omnifunc == "" |
+        setlocal omnifunc=syntaxcomplete#Complete |
+    endif
 endif
 
-" autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif " Eliminate trailing whitespaces
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif " Eliminate trailing whitespaces
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Shortcuts
@@ -110,6 +113,12 @@ function SaveSession()
 endfunction
 autocmd VimLeave * call SaveSession()
 
+" Auto-create non-existing directory when opening a file
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h")) | execute "silent! !mkdir -p ".shellescape(expand('%:h'), 1) | redraw! | endif
+augroup END
+
 " Generate ctags for your C++ code
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
@@ -117,18 +126,25 @@ map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " Plugin Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" --- SuperTab
-let g:SuperTabDefaultCompletionType = "context" " Use omnicompletion
-
-" --- OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif " open/close preview window
-set completeopt=menuone,menu,longest,preview
 set tags+=~/.vim/tags/cpp
+
+" Load pylint code plugin (Seems not stable enough)
+let g:pymode_lint = 0
+
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Bundle 'Valloric/YouCompleteMe'
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+set completeopt=menuone,menu,longest,preview
+
+Bundle 'Raimondi/delimitMate'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'marijnh/tern_for_vim'
+Bundle 'pangloss/vim-javascript'
+Bundle "lepture/vim-jinja"
