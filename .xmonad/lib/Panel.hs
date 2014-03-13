@@ -86,5 +86,6 @@ spawnPanels = do
 
 killPanels :: IO ()
 killPanels = do
-    spawn "killall conky"
+    spawn "killall topstatusbar"
+    spawn "killall dzen2"
     return ()
