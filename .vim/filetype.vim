@@ -1,7 +1,5 @@
-autocmd! BufNewFile,BufRead *.pde setlocal ft=arduino
-autocmd! BufNewFile,BufRead Makefrag setlocal ft=make
 autocmd! BufNewFile,BufRead *.vimp* setlocal ft=vim
-autocmd! BufNewFile,BufRead *.ned setlocal ft=ned
-autocmd! BufNewFile,BufRead *.scala setlocal ft=scala
-autocmd! BufNewFile,BufRead *.go setlocal ft=go
 autocmd! BufNewFile,BufRead *.j2 setlocal ft=jinja
+autocmd! BufNewFile,BufRead *.html setlocal ft=html
+autocmd! BufNewFile,BufRead *.js setlocal ft=javascript
+autocmd! BufNewFile,BufRead *.css setlocal ft=css

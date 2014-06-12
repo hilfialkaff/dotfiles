@@ -1,11 +1,75 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle begin configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible                    " be iMproved, required
+filetype off                        " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'gmarik/Vundle.vim'                          " Main vundle plugin
+Plugin 'Raimondi/delimitMate'                       " Insert matching braces
+Plugin 'airblade/vim-gitgutter'                     " Git diff inside Vim
+Plugin 'pangloss/vim-javascript'                    " Javascript syntax
+Plugin 'lepture/vim-jinja'                          " Jinja syntax
+Plugin 'vim-scripts/Rename'                         " File renaming
+Plugin 'tpope/vim-fugitive'                         " Git command
+Plugin 'Lokaltog/vim-easymotion'                    " Easy words navigation
+Plugin 'scrooloose/nerdtree'                        " File navigation
+    map <C-n> :NERDTreeToggle<CR>
+Plugin 'Lokaltog/powerline-fonts'                   " Fonts for status line
+Plugin 'bling/vim-airline'                          " Better status line
+    set laststatus=2
+    let g:airline#extensions#tabline#enabled=0
+    let g:airline_powerline_fonts=1
+    let g:airline#extensions#tabline#enabled=1
+    let g:airline_theme='powerlineish'
+    let g:airline_left_sep='▶'
+    function! AirlineInit()
+        let g:airline_section_a = airline#section#create(['%f'])
+        let g:airline_section_b = airline#section#create(['filetype'])
+        let g:airline_section_c = airline#section#create(['branch'])
+        let g:airline_section_x = airline#section#create([])
+        let g:airline_section_y = airline#section#create(['%l'])
+        let g:airline_section_z = airline#section#create(['%P'])
+    endfunction
+    autocmd VimEnter * call AirlineInit()
+Plugin 'klen/python-mode'                           " Python goodness
+    let g:pymode_lint_on_write=0
+    let g:pymode_rope_complete_on_dot=0
+    let g:pymode_lint_checkers=['pyflakes', 'mccabe']
+Plugin 'kien/ctrlp.vim'                             " Fuzzy-finder file
+    set wildignore+=*/tmp/*,*.so,*.swp
+    let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/](venv|\.(git|hg|svn))$'
+      \ }
+Plugin 'gregsexton/MatchTag'                        " HTML tag highlighting
+Plugin 'Shougo/neocomplcache.vim'                   " Autocompletion
+    let g:neocomplcache_enable_at_startup=1
+    let g:neocomplcache_enable_smart_case=1
+    let g:neocomplcache_enable_camel_case_completion=1
+    let g:neocomplcache_enable_underbar_completion=1
+    let g:neocomplcache_min_syntax_lengthl=0
+    let g:neocomplcache_lock_buffer_name_pattern='\*ku\*'
+Plugin 'ervandew/supertab'                          " TAB for auto-completion
+    let g:SuperTabDefaultCompletionType = "<c-n>"   " Top-down scroll
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle end configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible
 set backspace=indent,eol,start   " Ensure backspace is enabled
 set nu                           " Shows line numbers
-" set tw=80                        " 80 chars in a line
+set tw=80                        " 80 chars in a line
+set cc=80                        " Indicates the 80 chars limit
 set clipboard=unnamed            " Copying from terminal buffer
 set wildmode=longest,list        " Display tab completion in nice format
 set ruler                        " show the cursor position all the time
@@ -13,18 +77,18 @@ set showmatch                    " Cursor shows matching ) and }
 set history=500                  " Remember 500 past commands
 set undolevels=1000              " Max number of undos
 set cursorline                   " Highlight current line
+set relativenumber               " Relative line numbering
 colorscheme jellybeans           " Colorscheme
 syntax on                        " Colored programming syntax
-filetype plugin on               " File specific config
 
 " Indentation
 set autoindent                   " Auto indentation
-set copyindent                   " Copy the previous indentation on autoindenting
+set copyindent                   " Copy the previous indentation
 
 " Searching
 set incsearch                    " Display all search occurences
 set hlsearch                     " Highlight search occurrences
-set smartcase                    " Ignore case if search pattern is all lowercase,case-sensitive otherwise
+set smartcase                    " Ignore case if search pattern is lowercase
 
 " Tabs
 set ts=4                         " Set tabspacing to be 4
@@ -36,25 +100,22 @@ set foldenable                   " Enable folding
 set foldlevelstart=0             " Start out with everything folded
 set foldmethod=syntax            " Fold by per-language-syntax
 
+set guifont=Inconsolata/Inconsolata\ for\ Powerline.otf
+
 " Being grammar nazi
-" set spell
-" setlocal spell spelllang=en_us
+set spell
+setlocal spell spelllang=en_us
 " set thesaurus+=~/.vim/thesaurus/mthesaur.txt
-
-" Enable omni completion.
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType java set omnifunc=javacomplete#Complete
-" autocmd FileType cpp set omnifunc=cppcomplete#Complete
-
-" use syntax complete if nothing else available
-if has("autocmd") && exists("+omnifunc")
-    autocmd Filetype *
-    if &omnifunc == "" |
-        setlocal omnifunc=syntaxcomplete#Complete |
-    endif
-endif
+set completeopt=menuone,menu,longest,preview
 
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif " Eliminate trailing whitespaces
+
+" Omni-completion
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Shortcuts
@@ -68,7 +129,7 @@ let g:mapleader=","
 cmap w!! w !sudo tee % > /dev/null
 
 " Find all todo like a bauss
-noremap <Leader>t :noautocmd vimgrep /TODO/j **/*\.[chsS] **/*\.py **\*.html <CR>:cw<CR>
+noremap <Leader>t :noautocmd vimgrep /TODO/j **/*\.[ch] **/*\.py **\*.html <CR>:cw<CR>
 
 " ctrl-jklm changes to Vim split
 noremap <c-j> <c-w>j
@@ -97,7 +158,7 @@ noremap <silent> <S-t> :tabnew<CR>
 noremap <silent> <S-w> :tabclose<CR>
 
 " Blackhole register
-noremap <c-d> "_
+" noremap <c-d> "_
 
 " Epic shortcut to load your last session
 nmap <F3> <ESC>:call LoadSession()<CR>
@@ -116,35 +177,15 @@ autocmd VimLeave * call SaveSession()
 " Auto-create non-existing directory when opening a file
 augroup BWCCreateDir
     autocmd!
-    autocmd BufWritePre * if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h")) | execute "silent! !mkdir -p ".shellescape(expand('%:h'), 1) | redraw! | endif
+    autocmd BufWritePre * if expand("<afile>")!~#'^\w\+:/' &&
+        \ !isdirectory(expand("%:h")) | execute
+        \ "silent! !mkdir -p ".shellescape(expand('%:h'), 1) | redraw! | endif
 augroup END
 
-" Generate ctags for your C++ code
-map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin Settings
+" File-specific
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set tags+=~/.vim/tags/cpp
-
-" Load pylint code plugin (Seems not stable enough)
-let g:pymode_lint = 0
-
-" Vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Bundle 'Valloric/YouCompleteMe'
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
-set completeopt=menuone,menu,longest,preview
-
-Bundle 'Raimondi/delimitMate'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'marijnh/tern_for_vim'
-Bundle 'pangloss/vim-javascript'
-Bundle "lepture/vim-jinja"
+autocmd filetype javascript,css,html setlocal autoindent
+autocmd filetype javascript,css,html setlocal shiftwidth=2
+autocmd filetype javascript,css,html setlocal ts=2
+autocmd filetype javascript,css,html setlocal softtabstop=2
