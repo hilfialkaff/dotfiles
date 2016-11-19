@@ -162,3 +162,12 @@ for keycode in '[' '0'; do
   bindkey "^[${keycode}B" history-substring-search-down
 done
 unset keycode
+
+#########################################################################################
+# Mac only
+#########################################################################################
+
+# Go forward/backward using alt-left/right
+bindkey -e
+bindkey '[C' forward-word
+bindkey '[D' backward-word
