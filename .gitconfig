@@ -1,26 +1,32 @@
-[user]
-	name = Hilfi M. Alkaff
-	email = alkaff2@illinois.edu
+[alias]
+lf = ls-files
+g = grep
+st = status
+cp = cherry-pick
+ci = commit -v
+cia = commit -va
+ciam = commit -v --amend
+sh = log --stat -n 1
+logs = log --stat
+d = diff
+dk = diff --cached
+diffs = diff --stat
+erase = !sh -c 'git rebase --onto $0^ $0 HEAD'
+head = log -n 1 --pretty=format:%h
+b = branch -v
+ba = branch -av
+co = checkout
+lore = log --oneline origin/master..
+rim = rebase -i origin/master
+
+[branch]
+	autosetuprebase = always
 [color]
-    ui = true
-	diff = auto
-	status = auto
-	branch = auto
-
-[color "branch"]
-    current = blue
-    local = yellow
-    remote = magenta
-
-[color "diff"]
-    meta = yellow
-    frag = magenta
-    old = red
-    new = blue
-
-[color "status"]
-    added = yellow
-    changed = blue
-
-[core]
-	excludesfile = ~/.gitignore_global
+	ui = true
+[merge]
+	conflictstyle = diff3
+[push]
+    default = simple
+[user]
+	email = hilfialkaff@gmail.com
+	name = Hilfi Alkaff
