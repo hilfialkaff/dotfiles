@@ -3,11 +3,11 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                    " be iMproved, required
 filetype off                        " required
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/Users/halkaff/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins
+" Plugins (Run +PluginInstall first)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plugin 'gmarik/Vundle.vim'                          " Main vundle plugin
 Plugin 'Raimondi/delimitMate'                       " Insert matching braces
@@ -20,20 +20,21 @@ Plugin 'Lokaltog/vim-easymotion'                    " Easy words navigation
 Plugin 'scrooloose/nerdtree'                        " File navigation
     map <C-n> :NERDTreeToggle<CR>
 Plugin 'Lokaltog/powerline-fonts'                   " Fonts for status line
-Plugin 'bling/vim-airline'                          " Better status line
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
     set laststatus=2
     let g:airline#extensions#tabline#enabled=0
     let g:airline_powerline_fonts=1
     let g:airline#extensions#tabline#enabled=1
-    let g:airline_theme='powerlineish'
+    let g:airline_theme='molokai'
     let g:airline_left_sep='▶'
     function! AirlineInit()
-        let g:airline_section_a = airline#section#create(['%f'])
-        let g:airline_section_b = airline#section#create(['filetype'])
-        let g:airline_section_c = airline#section#create(['branch'])
-        let g:airline_section_x = airline#section#create([])
-        let g:airline_section_y = airline#section#create(['%l'])
-        let g:airline_section_z = airline#section#create(['%P'])
+        let g:airline_section_a = airline#section#create(['mode', ' ', 'branch'])
+        let g:airline_section_b = airline#section#create_left(['ffenc', 'hunks', '%f'])
+        let g:airline_section_c = airline#section#create(['filetype'])
+        let g:airline_section_x = airline#section#create(['%P'])
+        let g:airline_section_y = airline#section#create(['%B'])
+        let g:airline_section_z = airline#section#create_right(['%l', '%c'])
     endfunction
     autocmd VimEnter * call AirlineInit()
 Plugin 'klen/python-mode'                           " Python goodness
