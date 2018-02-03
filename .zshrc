@@ -1,7 +1,7 @@
 export TERM='xterm-256color'
 
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/files/projects/dotfiles/oh-my-zsh/
+ZSH=$HOME/code/dotfiles/oh-my-zsh/
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -28,10 +28,16 @@ plugins=(git-flow history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
-
 # Colored directory
-eval $(dircolors -b ~/.dircolors)
+if whence dircolors >/dev/null; then
+    eval "$(dircolors -b)"
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+    alias ls='ls --color'
+else
+    export CLICOLOR=1
+    export LSCOLORS="Gxfxcxdxbxegedabagacad"
+    zstyle ':completion:*:default' list-colors ''
+fi
 
 # Use vim for everything!
 export EDITOR=vim
@@ -76,7 +82,7 @@ GIT_PAGER=""
 #########################################################################################
 
 # Pretty explanatory aliases
-alias ls='ls --color=auto'
+# alias ls='ls --color=auto'
 alias b='cd ..; ls'
 alias l='ls'
 alias grep='grep --color'

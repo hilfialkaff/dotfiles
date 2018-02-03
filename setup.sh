@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install -y tmux zsh
+brew install tmux zsh
 cp .tmux.conf ~
 cp .zshrc ~
 cp .vim* ~ -r
