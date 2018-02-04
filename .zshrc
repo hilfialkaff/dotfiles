@@ -36,7 +36,6 @@ if whence dircolors >/dev/null; then
 else
     export CLICOLOR=1
     export LSCOLORS="Gxfxcxdxbxegedabagacad"
-    zstyle ':completion:*:default' list-colors ''
 fi
 
 # Use vim for everything!
